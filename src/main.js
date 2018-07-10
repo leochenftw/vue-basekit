@@ -21,10 +21,12 @@ global.NProgress                =   NProgress;
 global.axios                    =   axios;
 global.base_url                 =   location.hostname == 'localhost' ? 'https:///' : '';
 global.base_prefix              =   location.hostname == 'localhost' ? '/#' : '/!/#';
+global.endpoints                =   require('@/config/endpoints');
+
 
 new Vue({
-el: '#app',
-router,
-components: { App },
-template: '<App/>'
-})
+        el                      :   '#app',
+        router,
+        components              :   { App },
+        template                :   '<App/>'
+    });
