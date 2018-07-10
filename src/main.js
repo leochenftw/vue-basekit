@@ -5,17 +5,21 @@ import App from './App';
 import router from './router';
 import axios from 'axios';
 import NProgress from 'nprogress';
+import _ from 'lodash';
 
 require('lightbox2');
+require("babel-polyfill"); // Enable promises on IE11 etc
 
 Vue.config.productionTip        =   false;
 Vue.prototype.$bus              =   new Vue({});
 axios.defaults.headers.common   =   {
                                         'X-Requested-With'  :   'XMLHttpRequest'
                                     };
+axios.defaults.withCredentials  =   true;
+global._                        =   _;
 global.NProgress                =   NProgress;
 global.axios                    =   axios;
-global.base_url                 =   location.hostname == 'localhost' ? 'https://sgl.leochen.co.nz' : '';
+global.base_url                 =   location.hostname == 'localhost' ? 'https:///' : '';
 global.base_prefix              =   location.hostname == 'localhost' ? '/#' : '/!/#';
 
 new Vue({

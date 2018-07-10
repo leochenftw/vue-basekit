@@ -18,6 +18,13 @@ export default
                             Header,
                             Footer
                         },
+    watch           :   {
+                            $route (to, from)
+                            {
+                                this.$bus.$emit('onPageChange');
+                                NProgress.start();
+                            }
+                        }
 }
 </script>
 <style>
