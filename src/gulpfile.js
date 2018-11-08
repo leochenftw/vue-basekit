@@ -10,7 +10,10 @@ var output = './css';
 var sassOptions = {
   errLogToConsole: true,
   outputStyle: 'expanded',
-  importer: moduleImporter()
+  importer: moduleImporter(),
+  includePaths: [
+      '../node_modules/bulma'
+  ]
 };
 
 var sassOptionsProduction = {
