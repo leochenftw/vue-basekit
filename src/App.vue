@@ -1,30 +1,27 @@
 <template>
 <div id="app">
     <Header />
-    <router-view/>
+    <router-view />
     <Footer />
 </div>
 </template>
 
 <script>
-
 import Header from './components/blocks/Header';
 import Footer from './components/blocks/Footer';
 
-export default
-{
-    name            :   'App',
-    components      :   {
-                            Header,
-                            Footer
-                        },
-    watch           :   {
-                            $route (to, from)
-                            {
-                                this.$bus.$emit('onPageChange');
-                                NProgress.start();
-                            }
-                        }
+export default {
+    name: 'App',
+    components: {
+        Header,
+        Footer
+    },
+    watch: {
+        $route(to, from) {
+            this.$bus.$emit('onPageChange');
+            NProgress.start();
+        }
+    }
 }
 </script>
 <style>
