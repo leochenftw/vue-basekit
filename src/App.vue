@@ -1,5 +1,5 @@
 <template>
-<div id="app">
+<div id="app" :class="[class_name]">
     <Header />
     <router-view />
     <Footer />
@@ -9,12 +9,18 @@
 <script>
 import Header from './components/blocks/Header';
 import Footer from './components/blocks/Footer';
+import slugify from 'slugify';
 
 export default {
     name: 'App',
     components: {
         Header,
         Footer
+    },
+    computed: {
+        class_name() {
+            return slugify(this.$route.name, {lower: true});
+        }
     },
     watch: {
         $route(to, from) {
