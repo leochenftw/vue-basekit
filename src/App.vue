@@ -18,12 +18,13 @@ export default {
     },
     watch: {
         $route(to, from) {
-            this.$bus.$emit('onPageChange');
-            NProgress.start();
+            // this.$bus.$emit('onPageChange');
+            // NProgress.start();
         }
     }
 }
 </script>
 <style>
+/* @import '../node_modules/lightbox2/src/css/lightbox.css'; */
 @import 'css/styles.css';
 </style>

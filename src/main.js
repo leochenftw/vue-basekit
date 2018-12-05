@@ -4,11 +4,11 @@ import Vue from 'vue';
 import App from './App';
 import router from './router';
 import axios from 'axios';
-import NProgress from 'nprogress';
+// import NProgress from 'nprogress';
 import _ from 'lodash';
 
 require('@/utils/utilities');
-require('lightbox2');
+// require('lightbox2');
 require("babel-polyfill"); // Enable promises on IE11 etc
 
 Vue.config.productionTip = false;
@@ -18,7 +18,7 @@ axios.defaults.headers.common = {
 };
 axios.defaults.withCredentials = true;
 global._ = _;
-global.NProgress = NProgress;
+// global.NProgress = NProgress;
 global.axios = axios;
 global.base_url = location.hostname == 'localhost' ? 'https:///' : '';
 global.endpoints = require('@/config/endpoints');
