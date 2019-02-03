@@ -66,6 +66,24 @@ Date.prototype.yyyymmdd = function() {
     return this.getFullYear() + '-' + (this.getMonth() + 1).DoubleDigit() + '-' + this.getDate().DoubleDigit();
 }
 
+String.prototype.ltrim = function(charlist)
+{
+    if (charlist === undefined) {
+        charlist = "\s";
+    }
+
+    return this.replace(new RegExp("^[" + charlist + "]+"), "");
+};
+
+String.prototype.rtrim = function(charlist)
+{
+    if (charlist === undefined) {
+        charlist = "\s";
+    }
+
+    return this.replace(new RegExp("[" + charlist + "]+$"), "");
+};
+
 /*
  * functions
  * */
