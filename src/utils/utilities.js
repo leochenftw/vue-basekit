@@ -66,6 +66,22 @@ Date.prototype.yyyymmdd = function() {
     return this.getFullYear() + '-' + (this.getMonth() + 1).DoubleDigit() + '-' + this.getDate().DoubleDigit();
 }
 
+String.prototype.toFilesize =   function bytesToSize() {
+    var sizes   =   ['Bytes', 'K', 'M', 'G', 'T'],
+        bytes   =   parseFloat(this);
+    if (bytes == 0) return '0B';
+    var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
+    return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
+};
+
+Number.prototype.toFilesize =   function bytesToSize() {
+    var sizes   =   ['Bytes', 'K', 'M', 'G', 'T'],
+        bytes   =   this;
+    if (bytes == 0) return '0B';
+    var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
+    return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
+};
+
 String.prototype.ltrim = function(charlist)
 {
     if (charlist === undefined) {
