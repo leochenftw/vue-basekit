@@ -5,6 +5,7 @@ import App from './App';
 import router from './router';
 import axios from 'axios';
 // import NProgress from 'nprogress';
+import 'promise-polyfill/src/polyfill';
 import _ from 'lodash';
 
 require('@/utils/utilities');
