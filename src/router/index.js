@@ -20,8 +20,8 @@ export default new Router({
         },
         {
             path: '*',
-            name: '403',
-            component: ErrorPage
+            name: 'GenericPage',
+            component: Page
         }
     ],
     scrollBehavior (to, from, savedPosition) {
