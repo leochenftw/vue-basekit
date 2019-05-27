@@ -22,6 +22,7 @@
 <script>
 export default {
     name: 'Header',
+    props: ['site_data'],
     data: function() {
         return {
             mobile_menu_is_active: false,

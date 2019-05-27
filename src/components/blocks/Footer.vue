@@ -10,7 +10,7 @@
 export default {
     name: 'Footer',
     props: [
-
+        'site_data'
     ],
     data: function() {
         return {
