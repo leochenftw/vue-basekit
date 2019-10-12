@@ -7,6 +7,7 @@ import Page from '@/components/pages/Page'
 Vue.use(Router)
 
 export default new Router({
+    mode: 'history',
     routes: [
         {
             path: '/',
@@ -16,6 +17,11 @@ export default new Router({
         {
             path: '/403',
             name: '403',
+            component: ErrorPage
+        },
+        {
+            path: '/404',
+            name: '404',
             component: ErrorPage
         },
         {
