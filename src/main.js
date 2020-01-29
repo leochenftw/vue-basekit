@@ -41,11 +41,12 @@ axios.defaults.headers.common = {
     'X-Requested-With': 'XMLHttpRequest'
 };
 axios.defaults.withCredentials = true;
-global._ = _;
+global._            =   _;
 // global.NProgress = NProgress;
-global.axios = axios;
-global.base_url = location.hostname == 'localhost' ? 'https:///' : '';
-global.endpoints = require('@/config/endpoints');
+global.csrf         =   null;
+global.axios        =   axios;
+global.base_url     =   location.hostname == 'localhost' ? 'https://attitude.leochen.co.nz/' : '/';
+global.endpoints    =   require('@/config/endpoints');
 
 
 new Vue({

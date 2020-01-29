@@ -8,7 +8,7 @@
 
 <script>
 export default {
-    name        :   'Homepage',
-    props       :   ['site_data']
+    name        :   'HomePage',
+    props       :   ['site_data', 'is_mobile'],
 }
 </script>

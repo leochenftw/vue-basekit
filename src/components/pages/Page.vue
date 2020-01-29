@@ -9,6 +9,6 @@
 <script>
 export default {
     name    :   'Page',
-    props   :   ['site_data']
+    props   :   ['site_data', 'is_mobile']
 }
 </script>

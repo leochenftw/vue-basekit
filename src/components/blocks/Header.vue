@@ -2,7 +2,10 @@
 <header id="header">
     <nav class="navbar is-transparent">
         <div class="navbar-brand">
-            <router-link class="navbar-item" :to="{ name: 'Homepage' }">Home</router-link>
+            <h1 :class="['navbar-item']" v-if="site_data.pagetype == 'HomePage'">
+                <router-link id="logo" rel="start" to="/"><img class="is-block" v-if="site_data.siteconfig.logo" :src="site_data.siteconfig.logo.url" :alt="site_data.siteconfig.title" /><template v-else>{{site_data.siteconfig.title}}</template></router-link>
+            </h1>
+            <router-link :class="['navbar-item']" id="logo" rel="start" v-else to="/"><img class="is-block" v-if="site_data.siteconfig.logo" :src="site_data.siteconfig.logo.url" :alt="site_data.siteconfig.title" /><template v-else>{{site_data.siteconfig.title}}</template></router-link>
             <div v-on:click="show_mobile_menu" :class="{'navbar-burger': true, 'burger': true, 'is-active': mobile_menu_is_active}" data-target="mobile-menu">
                 <span></span>
                 <span></span>
@@ -12,7 +15,7 @@
         <div id="mobile-menu" :class="{'navbar-menu': true, 'is-active': mobile_menu_is_active}">
             <div class="navbar-end">
                 <div class="navbar-item" v-for="item in navigation">
-                    <router-link :to="item.url">{{item.title}}</router-link>
+                    <router-link :to="item.url">{{item.label}}</router-link>
                 </div>
             </div>
         </div>
@@ -22,11 +25,11 @@
 <script>
 export default {
     name: 'Header',
-    props: ['site_data'],
+    props: ['site_data', 'is_mobile'],
     data: function() {
         return {
             mobile_menu_is_active: false,
-            navigation: []
+            navigation: this.site_data ? this.site_data.navigation : []
         }
     },
     methods: {

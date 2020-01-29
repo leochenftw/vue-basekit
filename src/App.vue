@@ -15,8 +15,8 @@
         </div>
     </div>
     <template v-else-if="site_data">
-        <Header :site_data="site_data" />
-        <router-view :site_data="site_data" />
+        <Header :site_data="site_data" :is_mobile="is_mobile" />
+        <router-view :site_data="site_data" :is_mobile="is_mobile" />
         <Footer :site_data="site_data" />
     </template>
 </div>
@@ -51,7 +51,8 @@ export default {
     data() {
         return {
             pagetitle   :   null,
-            site_data   :   null
+            site_data   :   null,
+            is_mobile   :   false
         }
     },
     components: {
@@ -123,12 +124,12 @@ export default {
         }
     },
     created() {
-        // let me  =   this;
-        // $(window).on('scroll', function(e) {
-        //     me.$bus.$emit('onWindowScroll', $(window).scrollTop());
-        // }).on('resize', function(e) {
-        //     me.$bus.$emit('onWindowSize', $(window).width());
-        // });
+        let me  =   this;
+        $(window).on('scroll', function(e) {
+            me.$bus.$emit('onWindowScroll', $(window).scrollTop());
+        }).on('resize', function(e) {
+            me.resize_handler($(window).width());
+        });
 
         this.get_page_data(this.$route.fullPath);
     },
@@ -138,6 +139,11 @@ export default {
         // });
     },
     methods :   {
+        resize_handler(width)
+        {
+            this.is_mobile  =   width <= 480;
+            this.$bus.$emit('onWindowSize', width);
+        },
         get_page_data(path, seamless) {
             if (this.not_supported) return false;
 
@@ -163,6 +169,9 @@ export default {
 
             this.pagetitle  =   resp.data.title;
             this.site_data  =   resp.data;
+            this.$nextTick().then(() => {
+                $(window).resize();
+            });
         }
     }
 }
