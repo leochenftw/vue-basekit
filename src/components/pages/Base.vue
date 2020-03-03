@@ -1,7 +1,7 @@
 <template>
 <main id="main" class="main" role="main">
-    <Hero v-if="site_data.hero" />
-    <component :is="site_data.pagetype" />
+    <Hero v-if="site_data && site_data.hero" />
+    <component v-if="site_data" :is="site_data.pagetype" />
 </main>
 </template>
 

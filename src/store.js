@@ -47,10 +47,19 @@ export default new Vuex.Store({
                     commit('update_data', resp.data);
                     resolve();
                 }).catch((error) => {
-                    // if (error && error.response && error.response.status) {
-                    //     me.$router.push('/' + error.response.status);
-                    // }
+                    commit('set_error', error);
+                    if (error.response && error.response.status && error.response.data) {
+                        commit('update_data', error.response.data);
+                    } else {
+                        this.dispatch('get_error_page', '404');
+                    }
                 });
+            });
+        },
+        get_error_page({ commit }, error_code, resolve)
+        {
+            axios.get(base_url + error_code).catch((error) => {
+                commit('update_data', error.response.data);
             });
         }
     }

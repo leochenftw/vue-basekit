@@ -1,14 +1,14 @@
 <template>
 <div class="section">
     <div class="container">
-        <h1 class="title is-1">{{site_data.title}}</h1>
+        <h1 class="title is-1">{{$store.state.error.title}}</h1>
+        <div class="content" v-html="$store.state.error.content"></div>
     </div>
 </div>
 </template>
 
 <script>
 export default {
-    name        :   'Homepage',
-    props       :   ['site_data']
+    name        :   'ErrorPage'
 }
 </script>

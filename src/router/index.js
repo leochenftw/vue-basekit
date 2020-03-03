@@ -8,16 +8,6 @@ Vue.use(Router)
 export default new Router({
     mode: 'history',
     routes: [
-        // {
-        //     path: '/403',
-        //     name: '403',
-        //     component: ErrorPage
-        // },
-        // {
-        //     path: '/404',
-        //     name: '404',
-        //     component: ErrorPage
-        // },
         {
             path: '*',
             name: 'Base',

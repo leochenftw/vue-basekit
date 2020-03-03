@@ -14,9 +14,10 @@
             </p>
         </div>
     </div>
-    <template v-else-if="site_data">
-        <Header />
-        <router-view />
+    <template v-else>
+        <Header v-if="site_data" />
+        <router-view v-if="!$store.state.error" />
+        <ErrorPage v-else />
         <Footer />
     </template>
 </div>
@@ -27,6 +28,7 @@ import Header from './components/blocks/Header';
 import Footer from './components/blocks/Footer';
 import slugify from 'slugify';
 import './css/styles.css';
+import ErrorPage from './components/pages/ErrorPage';
 
 export default {
     name: 'App',
@@ -50,7 +52,8 @@ export default {
     },
     components: {
         Header,
-        Footer
+        Footer,
+        ErrorPage
     },
     computed: {
         site_data()
