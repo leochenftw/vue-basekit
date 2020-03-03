@@ -1,5 +1,5 @@
 <template>
-<div id="app" :class="[class_name]">
+<div id="app" :class="[class_name, {'is-loading': $store.state.is_loading}]">
     <div v-if="not_supported" class="ie-go-home has-text-centered">
         <p class="subtitle is-4"><router-link :to="{ name: 'Homepage' }"><img width="120" src="@/assets/logo.png" /></router-link></p>
         <h1 class="title is-4">Your browser is not supported</h1>
@@ -15,9 +15,9 @@
         </div>
     </div>
     <template v-else-if="site_data">
-        <Header :site_data="site_data" :is_mobile="is_mobile" />
-        <router-view :site_data="site_data" :is_mobile="is_mobile" />
-        <Footer :site_data="site_data" />
+        <Header />
+        <router-view />
+        <Footer />
     </template>
 </div>
 </template>
@@ -38,7 +38,7 @@ export default {
             // If a child changes the title to "My Other Page Title",
             // it will become: My Other Page Title ← My Site
             titleTemplate: (titleChunk) => {
-                return titleChunk ? `${titleChunk}` : 'LEOCHENFTW!';
+                return titleChunk ? `${titleChunk}` : document.title;
             },
             // Define meta tags here.
             htmlAttrs: {
@@ -48,18 +48,21 @@ export default {
             meta: this.meta_items
         }
     },
-    data() {
-        return {
-            pagetitle   :   null,
-            site_data   :   null,
-            is_mobile   :   false
-        }
-    },
     components: {
         Header,
         Footer
     },
     computed: {
+        site_data()
+        {
+            return this.$store.state.site_data;
+        },
+        pagetitle()
+        {
+            if (!this.site_data) return null;
+
+            return this.site_data.title;
+        },
         class_name() {
             return slugify(this.$route.name, {lower: true});
         },
@@ -117,60 +120,25 @@ export default {
     },
     watch: {
         $route(to, from) {
-            this.site_data  =   null;
-            this.get_page_data(to.fullPath);
-            // this.$bus.$emit('onPageChange');
-            // NProgress.start();
+            this.$store.dispatch('get_page_data', to.fullPath).then(this.handle_page_data);
         }
     },
     created() {
         let me  =   this;
         $(window).on('scroll', function(e) {
-            me.$bus.$emit('onWindowScroll', $(window).scrollTop());
+            me.$store.state.offset  =   $(window).scrollTop();
         }).on('resize', function(e) {
-            me.resize_handler($(window).width());
+            me.$store.state.width   =   window.innerWidth;
         });
-
-        this.get_page_data(this.$route.fullPath);
-    },
-    mounted() {
-        // this.$nextTick().then(() => {
-        //     $(window).resize();
-        // });
+        this.$store.dispatch('get_page_data', this.$route.fullPath).then(this.handle_page_data);
+        this.$bus.$on('onCartUpdate', (cart) => {
+            this.site_data.session.cart =   cart;
+        });
     },
     methods :   {
-        resize_handler(width)
-        {
-            this.is_mobile  =   width <= 480;
-            this.$bus.$emit('onWindowSize', width);
-        },
-        get_page_data(path, seamless) {
-            if (this.not_supported) return false;
-
-            let me  =   this;
-            axios.get(
-                base_url + me.get_endpath(path)
-            ).then((resp) => {
-                me.handle_page_data(resp);
-            }).catch((error) => {
-                // if (error && error.response && error.response.status) {
-                //     me.$router.push('/' + error.response.status);
-                // }
-            });
-        },
-        get_endpath(path) {
-            path    =   path.ltrim('/');
-            return path;
-        },
-        handle_page_data(resp) {
-            if (!resp.data) {
-                return this.$router.replace('/403');
-            }
-
-            this.pagetitle  =   resp.data.title;
-            this.site_data  =   resp.data;
+        handle_page_data() {
             this.$nextTick().then(() => {
-                $(window).resize();
+                $(window).resize().scroll();
             });
         }
     }

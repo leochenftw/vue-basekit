@@ -6,13 +6,13 @@
                 <router-link id="logo" rel="start" to="/"><img class="is-block" v-if="site_data.siteconfig.logo" :src="site_data.siteconfig.logo.url" :alt="site_data.siteconfig.title" /><template v-else>{{site_data.siteconfig.title}}</template></router-link>
             </h1>
             <router-link :class="['navbar-item']" id="logo" rel="start" v-else to="/"><img class="is-block" v-if="site_data.siteconfig.logo" :src="site_data.siteconfig.logo.url" :alt="site_data.siteconfig.title" /><template v-else>{{site_data.siteconfig.title}}</template></router-link>
-            <div v-on:click="show_mobile_menu" :class="{'navbar-burger': true, 'burger': true, 'is-active': mobile_menu_is_active}" data-target="mobile-menu">
+            <div v-if="navigation" @click.prevent="show_mobile_menu" :class="['navbar-burger burger', {'is-active': mobile_menu_is_active}]" data-target="mobile-menu">
                 <span></span>
                 <span></span>
                 <span></span>
             </div>
         </div>
-        <div id="mobile-menu" :class="{'navbar-menu': true, 'is-active': mobile_menu_is_active}">
+        <div v-if="navigation" id="mobile-menu" :class="{'navbar-menu': true, 'is-active': mobile_menu_is_active}">
             <div class="navbar-end">
                 <div class="navbar-item" v-for="item in navigation">
                     <router-link :to="item.url">{{item.label}}</router-link>
@@ -25,14 +25,26 @@
 <script>
 export default {
     name: 'Header',
-    props: ['site_data', 'is_mobile'],
     data: function() {
         return {
-            mobile_menu_is_active: false,
-            navigation: this.site_data ? this.site_data.navigation : []
+            mobile_menu_is_active   :   false
         }
     },
-    methods: {
+    computed    :   {
+        site_data()
+        {
+            return this.$store.state.site_data;
+        },
+        navigation()
+        {
+            if (this.site_data) {
+                return this.site_data.navigation;
+            }
+
+            return null
+        }
+    },
+    methods     :   {
         click_to_close: function(e) {
             let target = $(e.target);
             if (!target.is('.burger') &&

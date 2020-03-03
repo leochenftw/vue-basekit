@@ -8,23 +8,15 @@
 
 <script>
 export default {
-    name: 'Footer',
-    props: [
-        'site_data'
-    ],
-    data: function() {
-        return {
-
-        };
-    },
-    components: {},
-    watch: {
-
-    },
-    computed: {
-        year() {
-            let d = new Date();
-
+    name        :   'Footer',
+    computed    :   {
+        site_data()
+        {
+            return this.$store.state.site_data;
+        },
+        year()
+        {
+            let d   =   new Date();
             return d.getFullYear();
         }
     }
