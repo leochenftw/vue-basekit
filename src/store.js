@@ -5,7 +5,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     state       :   {
-        error       :   false,
+        error       :   null,
         site_data   :   null,
         is_loading  :   true,
         is_mobile   :   false,
@@ -15,7 +15,7 @@ export default new Vuex.Store({
     mutations   :   {
         clear_error(state)
         {
-            state.error     =   false;
+            state.error     =   null;
         },
         set_error(state, data)
         {
@@ -41,6 +41,7 @@ export default new Vuex.Store({
     actions     :   {
         get_page_data({ commit }, path)
         {
+            commit('clear_error');
             commit('update_data', null);
             return new Promise((resolve, reject) => {
                 axios.get(base_url + path.ltrim('/')).then((resp) => {

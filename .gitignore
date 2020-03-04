@@ -14,3 +14,4 @@ yarn-error.log*
 *.sln
 package-lock.json
 src/components/pages/gitignores/
+src/components/blocks/gitignores/

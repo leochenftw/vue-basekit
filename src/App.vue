@@ -18,7 +18,7 @@
         <Header v-if="site_data" />
         <router-view v-if="!$store.state.error" />
         <ErrorPage v-else />
-        <Footer />
+        <Footer v-if="site_data" />
     </template>
 </div>
 </template>
