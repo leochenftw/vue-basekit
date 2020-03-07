@@ -36,17 +36,21 @@ Number.prototype.kmark = function() {
 };
 
 String.prototype.toDollar = function toDollar(digits) {
-    var n = this.toFloat();
-    n = Math.round(n * 100) / 100;
+    var n           =   this.toFloat(),
+        is_minus    =   n < 0;
+    n   =   Math.round(n * 100) / 100;
+    n   =   Math.abs(n);
     digits = (digits === null || digits === undefined) ? 2 : digits;
-    return '$' + n.toFixed(digits).kmark();
+    return (is_minus ? '-$' : '$') + n.toFixed(digits).kmark();
 };
 
 Number.prototype.toDollar = function toDollar(digits) {
-    var n = this;
-    n = Math.round(n * 100) / 100;
+    var n           =   this,
+        is_minus    =   n < 0;
+    n   =   Math.round(n * 100) / 100;
+    n   =   Math.abs(n);
     digits = (digits === null || digits === undefined) ? 2 : digits;
-    return '$' + n.toFixed(digits).kmark();
+    return (is_minus ? '-$' : '$') + n.toFixed(digits).kmark();
 };
 
 String.prototype.toFloat = function toFloat() {
